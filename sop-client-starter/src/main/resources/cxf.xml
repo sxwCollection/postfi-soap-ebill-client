@@ -1,0 +1,58 @@
+<beans xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws
+http://cxf.apache.org/schemas/jaxws.xsd">
+    <jaxws:client name="{http://ch.swisspost.ebill.b2bservice}UserCertificate" createdFromAPI="true">
+        <!-- Comment below element to use non-WS-SecPol CXF interceptor method -->
+        <jaxws:properties>
+            <entry key="security.signature.properties" value="clientKeystore.properties"/>
+            <entry key="security.callback-handler"
+                   value="sop.postfinance.ebill.starter.config.PasswordCallbackHandler"/>
+        </jaxws:properties>
+    </jaxws:client>
+
+
+    <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature">
+        <property name="prettyLogging" value="true"/>
+    </bean>
+
+    <!-- add the loggingFeature to the cxf bus -->
+    <cxf:bus>
+        <cxf:features>
+            <ref bean="loggingFeature"/>
+        </cxf:features>
+    </cxf:bus>
+    <!--
+        or
+    -->
+    <!--
+        <bean id="abstractLoggingInterceptor" abstract="true">
+            <property name="prettyLogging" value="true"/>
+        </bean>
+
+        <bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor"
+              parent="abstractLoggingInterceptor">
+        </bean>
+        <bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor"
+              parent="abstractLoggingInterceptor">
+        </bean>
+        <cxf:bus>
+            <cxf:inInterceptors>
+                <ref bean="loggingInInterceptor"/>
+            </cxf:inInterceptors>
+            <cxf:inFaultInterceptors>
+                <ref bean="loggingInInterceptor"/>
+            </cxf:inFaultInterceptors>
+            <cxf:outInterceptors>
+                <ref bean="loggingOutInterceptor"/>
+            </cxf:outInterceptors>
+            <cxf:outFaultInterceptors>
+                <ref bean="loggingOutInterceptor"/>
+            </cxf:outFaultInterceptors>
+        </cxf:bus>
+    -->
+</beans>
