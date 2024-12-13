@@ -26,7 +26,7 @@ see sop-client
 
 ## spring starter
 
-in pom:
+in pom:   
 '''
 
         <dependency>
@@ -39,7 +39,7 @@ in pom:
             <optional>true</optional>
         </dependency>
 
-'''
+'''   
 in sop-client-starter/src/main/resources/META-INF/spring.factories  
 add your autoConfig class:   
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=sop.postfinance.ebill.starter.config.AutoConfiguration
